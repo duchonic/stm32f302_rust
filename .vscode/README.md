@@ -4,7 +4,7 @@ Example configurations for debugging programs in-editor with VS Code.
 This directory contains configurations for two platforms:
 
  - `LM3S6965EVB` on QEMU
- - `STM32F303x` via OpenOCD
+ - `STM32F302x` via OpenOCD
 
 ## Required Extensions
 
@@ -30,7 +30,7 @@ Both are configured to build the project, using the default settings from `.carg
    - Semihosting output will be written to the Output view `Adapter Output`.
    - `ITM` logging does not work with QEMU emulation.
 
-2. OpenOCD: Starts a debug session for a `STM32F3DISCOVERY` board (or any `STM32F303x` running at 8MHz).
+2. OpenOCD: Starts a debug session for a `STM32F3DISCOVERY` board (or any `STM32F302x` running at 8MHz).
    - Follow the instructions above for configuring the build with `.cargo/config` and the `memory.x` linker script.
    - `ITM` output will be written to the Output view `SWO: ITM [port: 0, type: console]` output.
 

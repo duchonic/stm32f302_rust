@@ -46,13 +46,13 @@ You can find this information in the data sheet or the reference manual of your
 device.
 
 In this example we'll be using the STM32F3DISCOVERY. This board contains an
-STM32F303VCT6 microcontroller. This microcontroller has:
+STM32F302R8 microcontroller. This microcontroller has:
 
 - A Cortex-M4F core that includes a single precision FPU
 
-- 256 KiB of Flash located at address 0x0800_0000.
+- 64 KiB of Flash located at address 0x0800_0000.
 
-- 40 KiB of RAM located at address 0x2000_0000. (There's another RAM region but
+- 16 KiB of RAM located at address 0x2000_0000. (There's another RAM region but
   for simplicity we'll ignore it).
 
 1. Instantiate the template.
@@ -67,7 +67,7 @@ $ cd app
 ```
 
 2. Set a default compilation target. There are four options as mentioned at the
-   bottom of `.cargo/config`. For the STM32F303VCT6, which has a Cortex-M4F
+   bottom of `.cargo/config`. For the STM32F302R8, which has a Cortex-M4F
    core, we'll pick the `thumbv7em-none-eabihf` target.
 
 ``` console
@@ -87,12 +87,12 @@ target = "thumbv7em-none-eabihf" # Cortex-M4F and Cortex-M7F (with FPU)
 
 ``` console
 $ cat memory.x
-/* Linker script for the STM32F303VCT6 */
+/* Linker script for the STM32F302R8 */
 MEMORY
 {
   /* NOTE 1 K = 1 KiBi = 1024 bytes */
-  FLASH : ORIGIN = 0x08000000, LENGTH = 256K
-  RAM : ORIGIN = 0x20000000, LENGTH = 40K
+  FLASH : ORIGIN = 0x08000000, LENGTH = 64K
+  RAM : ORIGIN = 0x20000000, LENGTH = 16K
 }
 ```
 

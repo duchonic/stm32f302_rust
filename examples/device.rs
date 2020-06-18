@@ -13,7 +13,7 @@
 //! ```
 //! $ edit Cargo.toml && tail $_
 //! [dependencies.stm32f3]
-//! features = ["stm32f303", "rt"]
+//! features = ["stm32f302", "rt"]
 //! version = "0.7.1"
 //! ```
 //!
@@ -31,7 +31,7 @@ use panic_halt as _;
 use cortex_m::peripheral::syst::SystClkSource;
 use cortex_m_rt::entry;
 use cortex_m_semihosting::hprint;
-use stm32f3::stm32f303::{interrupt, Interrupt, NVIC};
+use stm32f3::stm32f302::{interrupt, Interrupt, NVIC};
 
 #[entry]
 fn main() -> ! {

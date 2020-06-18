@@ -1,20 +1,36 @@
 #![no_std]
 #![no_main]
 
-// pick a panicking behavior
-use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
-// use panic_abort as _; // requires nightly
-// use panic_itm as _; // logs messages over ITM; requires ITM support
-// use panic_semihosting as _; // logs messages to the host stderr; requires a debugger
+// Halt when the program panics.
+extern crate panic_halt;
 
-use cortex_m::asm;
+// Includes.
+use cortex_m::peripheral::syst::SystClkSource;
 use cortex_m_rt::entry;
+use stm32f30x_hal as hal;
+use hal::prelude::*;
+use hal::stm32f30x;
 
 #[entry]
 fn main() -> ! {
-    asm::nop(); // To not have main optimize to abort in release mode, remove when you add code
+  // Set up SysTick peripheral.
+  let cmp = cortex_m::Peripherals::take().unwrap();
+  let mut syst = cmp.SYST;
+  syst.set_clock_source( SystClkSource::Core );
+  // ~1ms period; STM32F3 resets to 8MHz internal oscillator.
+  syst.set_reload( 8_000_000 );
+  syst.enable_counter();
 
-    loop {
-        // your code goes here
-    }
+  // Set up GPIO pin B13 (LED #1)
+  let p = stm32f30x::Peripherals::take().unwrap();
+  let mut rcc = p.RCC.constrain();
+  let mut gpiob = p.GPIOB.split( &mut rcc.ahb );
+  let mut ld4 = gpiob.pb13.into_push_pull_output( &mut gpiob.moder, &mut gpiob.otyper );
+
+  loop {
+    while !syst.has_wrapped() {};
+    ld4.set_high();
+    while !syst.has_wrapped() {};
+    ld4.set_low();
+  }
 }
