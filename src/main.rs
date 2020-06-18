@@ -10,6 +10,7 @@ use cortex_m_rt::entry;
 use stm32f30x_hal as hal;
 use hal::prelude::*;
 use hal::stm32f30x;
+use cortex_m_semihosting::hprintln;
 
 #[entry]
 fn main() -> ! {
@@ -28,6 +29,7 @@ fn main() -> ! {
   let mut ld4 = gpiob.pb13.into_push_pull_output( &mut gpiob.moder, &mut gpiob.otyper );
 
   loop {
+      hprintln!("hello lady gaga").unwrap();
     while !syst.has_wrapped() {};
     ld4.set_high();
     while !syst.has_wrapped() {};
